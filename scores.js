@@ -25,6 +25,22 @@ function stateClass(state) {
   return `score-status state-${state || "pre"}`;
 }
 
+function findBoxscoreLink(links) {
+  if (!links || links.length === 0) return null;
+
+  const boxscore = links.find((l) => l.rel?.includes("boxscore"));
+  if (boxscore) return { href: boxscore.href, label: "Box Score" };
+
+  // Soccer scoreboards don't expose a "boxscore" rel — use match stats instead.
+  const stats = links.find((l) => l.rel?.includes("stats"));
+  if (stats) return { href: stats.href, label: "Match Stats" };
+
+  const summary = links.find((l) => l.rel?.includes("summary"));
+  if (summary) return { href: summary.href, label: "Summary" };
+
+  return null;
+}
+
 function formatEventTime(isoDate) {
   return new Date(isoDate).toLocaleString("en-US", {
     weekday: "short",
@@ -78,6 +94,17 @@ function renderEvent(event, groupLabel) {
   const meta = document.createElement("p");
   meta.className = "score-meta";
   meta.textContent = `${groupLabel} · ${formatEventTime(event.date)}`;
+
+  const boxscoreLink = findBoxscoreLink(event.links);
+  if (boxscoreLink) {
+    const link = document.createElement("a");
+    link.className = "score-boxscore-link";
+    link.href = boxscoreLink.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = boxscoreLink.label;
+    meta.append(" · ", link);
+  }
 
   li.append(row, meta);
   return li;

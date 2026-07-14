@@ -297,6 +297,16 @@ h1 {
   color: var(--muted);
 }
 
+.score-boxscore-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.score-boxscore-link:hover {
+  text-decoration: underline;
+}
+
 .liveblog-card {
   text-align: left;
 }
