@@ -296,3 +296,14 @@ h1 {
   font-size: 13px;
   color: var(--muted);
 }
+
+.liveblog-card {
+  text-align: left;
+}
+
+.liveblog-frame {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
