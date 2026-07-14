@@ -11,14 +11,33 @@
     <main class="shell">
       <p class="tag">Your website — a blank canvas</p>
       <h1>JJ's Dashboard</h1>
-      <p class="lead">
-        This page is empty on purpose. Open the AI assistant, describe the site
-        you want, and watch it get built right here.
-      </p>
-      <p class="hint">
-        Try: <em>"Turn this into a personal site with my name, a short bio, and
-        a photo. Clean and minimal."</em>
-      </p>
+
+      <section class="card" aria-labelledby="today-heading">
+        <div class="today-header">
+          <p class="tag" id="today-heading">Today</p>
+          <p class="today-date" id="today-date"></p>
+        </div>
+
+        <h2 class="section-title">What I'm learning today</h2>
+
+        <form id="learning-form" class="learning-form">
+          <input
+            id="learning-input"
+            type="text"
+            placeholder="Add something you're learning today…"
+            autocomplete="off"
+          />
+          <button type="submit">Add</button>
+        </form>
+
+        <ul id="learning-list" class="learning-list"></ul>
+
+        <p id="learning-empty" class="hint">
+          Nothing added yet — type something above and hit Add.
+        </p>
+      </section>
     </main>
+
+    <script src="script.js"></script>
   </body>
 </html>

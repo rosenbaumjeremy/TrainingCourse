@@ -55,3 +55,121 @@ h1 {
   border-top: 1px solid #e5e7eb;
   padding-top: 16px;
 }
+
+.card {
+  margin-top: 32px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  background: #fafafa;
+}
+
+.today-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.today-header .tag {
+  margin: 0;
+}
+
+.today-date {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 20px;
+  margin: 8px 0 16px;
+}
+
+.learning-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.learning-form input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.learning-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.learning-form button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.learning-form button:hover {
+  background: #1d4ed8;
+}
+
+.learning-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.learning-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.learning-list li:last-child {
+  border-bottom: none;
+}
+
+.learning-list li.done span.item-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.learning-list input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.learning-list .item-text {
+  flex: 1;
+  word-break: break-word;
+}
+
+.learning-list .remove-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.learning-list .remove-btn:hover {
+  color: #dc2626;
+}
