@@ -63,7 +63,7 @@ async function init() {
   renderDate();
 
   try {
-    const res = await fetch("https://www.sefaria.org/api/calendars");
+    const res = await fetch("https://www.sefaria.org/api/calendars", { cache: "no-store" });
     if (!res.ok) throw new Error(`Sefaria API returned ${res.status}`);
     const data = await res.json();
 
