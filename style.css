@@ -6,6 +6,10 @@
   --muted: #6b7280;
   --accent: #2563eb;
   --bg: #ffffff;
+  --purple: #7c3aed;
+  --teal: #0d9488;
+  --orange: #ea580c;
+  --pink: #db2777;
 }
 
 * {
@@ -16,7 +20,9 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
+  min-height: 100%;
+  background: radial-gradient(circle at 15% 0%, #eef2ff 0%, #ffffff 38%),
+    radial-gradient(circle at 100% 20%, #fdf4ff 0%, #ffffff 45%), var(--bg);
   color: var(--ink);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
@@ -52,9 +58,41 @@ body {
 }
 
 h1 {
-  font-size: 44px;
+  font-size: 48px;
   line-height: 1.1;
-  margin: 0 0 16px;
+  margin: 0 0 32px;
+  text-align: center;
+  background: linear-gradient(90deg, var(--accent), var(--purple), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.01em;
+}
+
+.h1-wave {
+  display: inline-block;
+  filter: none;
+  -webkit-text-fill-color: initial;
+  animation: wave 2.2s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0%, 60%, 100% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(16deg);
+  }
+  20% {
+    transform: rotate(-10deg);
+  }
+  30% {
+    transform: rotate(16deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
 }
 
 .lead {
@@ -73,9 +111,37 @@ h1 {
 .card {
   margin-top: 32px;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 24px;
-  background: #fafafa;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.05);
+  border-top: 4px solid var(--accent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.06), 0 16px 32px rgba(15, 23, 42, 0.09);
+}
+
+.widget-grid .widget:nth-of-type(1) {
+  border-top-color: var(--teal);
+}
+
+.widget-grid .widget:nth-of-type(2) {
+  border-top-color: var(--accent);
+}
+
+.widget-grid .widget:nth-of-type(3) {
+  border-top-color: var(--purple);
+}
+
+.widget-grid .widget:nth-of-type(4) {
+  border-top-color: var(--orange);
+}
+
+.widget-grid .widget:nth-of-type(5) {
+  border-top-color: var(--pink);
 }
 
 .today-header {

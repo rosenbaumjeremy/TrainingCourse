@@ -19,6 +19,12 @@ const ENDPOINTS = {
       url: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-summer-utah/scoreboard",
     },
   ],
+  mlb: [
+    {
+      label: "MLB",
+      url: "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
+    },
+  ],
 };
 
 function stateClass(state) {
@@ -153,3 +159,4 @@ async function renderGroup(sources, listId, statusId) {
 
 renderGroup(ENDPOINTS.worldcup, "worldcup-list", "worldcup-status");
 renderGroup(ENDPOINTS.summerleague, "summerleague-list", "summerleague-status");
+renderGroup(ENDPOINTS.mlb, "mlb-list", "mlb-status");
