@@ -10,40 +10,42 @@
     <main class="shell">
       <h1>JJ's Dashboard</h1>
 
-      <section class="card" aria-labelledby="calendar-heading">
-        <div class="today-header">
-          <p class="tag" id="calendar-heading">לוח לימוד יומי</p>
-          <p class="today-date" id="today-date"></p>
-        </div>
+      <div class="widget-grid">
+        <section class="card widget" aria-labelledby="calendar-heading">
+          <div class="today-header">
+            <p class="tag" id="calendar-heading">לוח לימוד יומי</p>
+            <p class="today-date" id="today-date"></p>
+          </div>
 
-        <ul id="calendar-list" class="calendar-list"></ul>
+          <ul id="calendar-list" class="calendar-list"></ul>
 
-        <p id="calendar-status" class="hint">טוען את לוח הלימוד היומי מ־Sefaria…</p>
-      </section>
+          <p id="calendar-status" class="hint">טוען את לוח הלימוד היומי מ־Sefaria…</p>
+        </section>
 
-      <section class="card scores-card" dir="ltr" aria-labelledby="worldcup-heading">
-        <div class="today-header">
-          <p class="tag" id="worldcup-heading">World Cup Scores</p>
-        </div>
-        <ul id="worldcup-list" class="scores-list"></ul>
-        <p id="worldcup-status" class="hint">Loading World Cup scores from ESPN…</p>
-      </section>
+        <section class="card widget scores-card" dir="ltr" aria-labelledby="worldcup-heading">
+          <div class="today-header">
+            <p class="tag" id="worldcup-heading">World Cup Scores</p>
+          </div>
+          <ul id="worldcup-list" class="scores-list"></ul>
+          <p id="worldcup-status" class="hint">Loading World Cup scores from ESPN…</p>
+        </section>
 
-      <section class="card scores-card" dir="ltr" aria-labelledby="summerleague-heading">
-        <div class="today-header">
-          <p class="tag" id="summerleague-heading">NBA Summer League Scores</p>
-        </div>
-        <ul id="summerleague-list" class="scores-list"></ul>
-        <p id="summerleague-status" class="hint">Loading NBA Summer League scores from ESPN…</p>
-      </section>
+        <section class="card widget scores-card" dir="ltr" aria-labelledby="summerleague-heading">
+          <div class="today-header">
+            <p class="tag" id="summerleague-heading">NBA Summer League Scores</p>
+          </div>
+          <ul id="summerleague-list" class="scores-list"></ul>
+          <p id="summerleague-status" class="hint">Loading NBA Summer League scores from ESPN…</p>
+        </section>
 
-      <section class="card news-card" dir="ltr" aria-labelledby="news-heading">
-        <div class="today-header">
-          <p class="tag" id="news-heading">i24NEWS — Live Updates</p>
-        </div>
-        <ul id="news-list" class="news-list"></ul>
-        <p id="news-status" class="hint">Loading live updates from i24news.tv…</p>
-      </section>
+        <section class="card widget news-card" dir="ltr" aria-labelledby="news-heading">
+          <div class="today-header">
+            <p class="tag" id="news-heading">i24NEWS — Live Updates</p>
+          </div>
+          <ul id="news-list" class="news-list"></ul>
+          <p id="news-status" class="hint">Loading live updates from i24news.tv…</p>
+        </section>
+      </div>
     </main>
 
     <script src="calendar.js"></script>
