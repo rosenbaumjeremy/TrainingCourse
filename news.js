@@ -36,26 +36,49 @@ function extractItemsFromHtml(html) {
   return items;
 }
 
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function fetchViaOwnBackend() {
-  const res = await fetch("/api/news?fresh=1", { cache: "no-store" });
+  const res = await fetchWithTimeout("/api/news?fresh=1", { cache: "no-store" }, 8000);
   if (!res.ok) throw new Error(`/api/news returned ${res.status}`);
   const data = await res.json();
   return data.items || [];
 }
 
+// Public CORS proxies are individually flaky (rate limits, downtime), so try
+// a short list in order and fall back through them before giving up. Every
+// URL is cache-busted so we always pull whatever's actually live right now.
+const CORS_PROXIES = [
+  (target) => "https://api.allorigins.win/raw?url=" + encodeURIComponent(target) + "&_=" + Date.now(),
+  (target) => "https://corsproxy.io/?url=" + encodeURIComponent(target) + "&_=" + Date.now(),
+  (target) => "https://r.jina.ai/" + target,
+];
+
 async function fetchViaCorsProxy() {
   const target = "https://www.i24news.tv/en";
-  // Cache-bust both the proxy and the upstream page so every page load
-  // pulls whatever is actually live on i24news.tv right now.
-  const proxyUrl =
-    "https://api.allorigins.win/raw?url=" +
-    encodeURIComponent(target) +
-    "&_=" +
-    Date.now();
-  const res = await fetch(proxyUrl, { cache: "no-store" });
-  if (!res.ok) throw new Error(`CORS proxy returned ${res.status}`);
-  const html = await res.text();
-  return extractItemsFromHtml(html);
+  let lastErr;
+  for (const buildUrl of CORS_PROXIES) {
+    try {
+      const res = await fetchWithTimeout(buildUrl(target), { cache: "no-store" }, 8000);
+      if (!res.ok) throw new Error(`CORS proxy returned ${res.status}`);
+      const html = await res.text();
+      const items = extractItemsFromHtml(html);
+      if (items.length > 0) return items;
+      lastErr = new Error("Proxy returned no items");
+    } catch (err) {
+      lastErr = err;
+      console.warn("CORS proxy attempt failed, trying next", err);
+    }
+  }
+  throw lastErr || new Error("All CORS proxies failed");
 }
 
 function formatTime(iso) {
