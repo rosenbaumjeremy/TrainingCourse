@@ -22,10 +22,24 @@ const ENDPOINTS = {
   mlb: [
     {
       label: "MLB",
-      url: "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
+      // No `url` here — MLB has off days (e.g. the All-Star break) where
+      // ESPN's dateless scoreboard silently falls back to the last day
+      // that had *completed* games, which can be quietly stale. Instead we
+      // build the URL fresh with an explicit date at fetch time and walk
+      // backward until we find a day with events.
+      dynamic: true,
+      buildUrl: (dateStr) =>
+        `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=${dateStr}`,
     },
   ],
 };
+
+function espnDateParam(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}${m}${d}`;
+}
 
 function stateClass(state) {
   return `score-status state-${state || "pre"}`;
@@ -116,9 +130,27 @@ function renderEvent(event, groupLabel) {
   return li;
 }
 
+async function fetchDynamicSource(source, maxDaysBack = 10) {
+  const today = new Date();
+  for (let i = 0; i <= maxDaysBack; i++) {
+    const day = new Date(today);
+    day.setDate(day.getDate() - i);
+    const url = source.buildUrl(espnDateParam(day));
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`ESPN API returned ${res.status}`);
+    const data = await res.json();
+    const events = data.events || [];
+    if (events.length > 0) {
+      return { label: source.label, events };
+    }
+  }
+  return { label: source.label, events: [] };
+}
+
 async function fetchGroup(sources) {
   const results = await Promise.allSettled(
     sources.map(async (source) => {
+      if (source.dynamic) return fetchDynamicSource(source);
       const res = await fetch(source.url);
       if (!res.ok) throw new Error(`ESPN API returned ${res.status}`);
       const data = await res.json();
