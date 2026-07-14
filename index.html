@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+
     <main class="shell">
-      <h1>JJ's Dashboard <span class="h1-wave">👋</span></h1>
+      <header class="page-header">
+        <h1>JJ's Dashboard <span class="h1-wave">👋</span></h1>
+        <p class="subtitle">Torah learning, live scores &amp; breaking news — all in one place</p>
+      </header>
 
       <div class="widget-grid">
         <section class="card widget" aria-labelledby="calendar-heading">
           <div class="today-header">
-            <p class="tag" id="calendar-heading">📖 לוח לימוד יומי</p>
+            <p class="tag"><span class="tag-icon icon-teal">📖</span><span id="calendar-heading">לוח לימוד יומי</span></p>
             <p class="today-date" id="today-date"></p>
           </div>
 
@@ -24,7 +31,8 @@
 
         <section class="card widget scores-card" dir="ltr" aria-labelledby="worldcup-heading">
           <div class="today-header">
-            <p class="tag" id="worldcup-heading">⚽ World Cup Scores</p>
+            <p class="tag"><span class="tag-icon icon-blue">⚽</span><span id="worldcup-heading">World Cup Scores</span></p>
+            <span class="live-pill"><span class="live-dot"></span>LIVE</span>
           </div>
           <ul id="worldcup-list" class="scores-list"></ul>
           <p id="worldcup-status" class="hint">Loading World Cup scores from ESPN…</p>
@@ -32,7 +40,8 @@
 
         <section class="card widget scores-card" dir="ltr" aria-labelledby="summerleague-heading">
           <div class="today-header">
-            <p class="tag" id="summerleague-heading">🏀 NBA Summer League Scores</p>
+            <p class="tag"><span class="tag-icon icon-purple">🏀</span><span id="summerleague-heading">NBA Summer League Scores</span></p>
+            <span class="live-pill"><span class="live-dot"></span>LIVE</span>
           </div>
           <ul id="summerleague-list" class="scores-list"></ul>
           <p id="summerleague-status" class="hint">Loading NBA Summer League scores from ESPN…</p>
@@ -40,7 +49,8 @@
 
         <section class="card widget scores-card" dir="ltr" aria-labelledby="mlb-heading">
           <div class="today-header">
-            <p class="tag" id="mlb-heading">⚾ MLB Scores</p>
+            <p class="tag"><span class="tag-icon icon-orange">⚾</span><span id="mlb-heading">MLB Scores</span></p>
+            <span class="live-pill"><span class="live-dot"></span>LIVE</span>
           </div>
           <ul id="mlb-list" class="scores-list"></ul>
           <p id="mlb-status" class="hint">Loading MLB scores from ESPN…</p>
@@ -48,12 +58,15 @@
 
         <section class="card widget news-card" dir="ltr" aria-labelledby="news-heading">
           <div class="today-header">
-            <p class="tag" id="news-heading">📰 i24NEWS — Live Updates</p>
+            <p class="tag"><span class="tag-icon icon-pink">📰</span><span id="news-heading">i24NEWS — Live Updates</span></p>
+            <span class="live-pill"><span class="live-dot"></span>LIVE</span>
           </div>
           <ul id="news-list" class="news-list"></ul>
           <p id="news-status" class="hint">Loading live updates from i24news.tv…</p>
         </section>
       </div>
+
+      <footer class="page-footer">Made with ❤️ for JJ · refreshes every time you open the page</footer>
     </main>
 
     <script src="calendar.js"></script>
