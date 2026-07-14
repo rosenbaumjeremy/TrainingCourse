@@ -1,100 +1,74 @@
-// Daily learning list — stored per calendar day in localStorage so each
-// day keeps its own list, and today's list is always what you see first.
+// Shows Sefaria's daily learning schedule (לוח לימוד יומי) — Daf Yomi, Daily
+// Mishnah, Daily Rambam, and more — fetched live from Sefaria's public API.
 
 const dateEl = document.getElementById("today-date");
-const formEl = document.getElementById("learning-form");
-const inputEl = document.getElementById("learning-input");
-const listEl = document.getElementById("learning-list");
-const emptyEl = document.getElementById("learning-empty");
+const listEl = document.getElementById("calendar-list");
+const statusEl = document.getElementById("calendar-status");
 
-const todayKey = () => {
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `learning-log:${yyyy}-${mm}-${dd}`;
-};
-
-const KEY = todayKey();
-
-function loadItems() {
-  try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveItems(items) {
-  localStorage.setItem(KEY, JSON.stringify(items));
-}
-
-function renderDate() {
-  const formatted = new Date().toLocaleDateString(undefined, {
+function renderDate(isoDate) {
+  const d = isoDate ? new Date(isoDate) : new Date();
+  dateEl.textContent = d.toLocaleDateString("he-IL", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  dateEl.textContent = formatted;
 }
 
-function renderList(items) {
+function sefariaUrl(item) {
+  if (!item.url) return null;
+  if (item.url.startsWith("collections/")) {
+    return `https://www.sefaria.org.il/${item.url}`;
+  }
+  return `https://www.sefaria.org.il/${encodeURIComponent(item.url)}`;
+}
+
+function renderItems(items) {
   listEl.innerHTML = "";
-  emptyEl.style.display = items.length === 0 ? "block" : "none";
 
-  items.forEach((item, index) => {
+  items.forEach((item) => {
     const li = document.createElement("li");
-    if (item.done) li.classList.add("done");
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = item.done;
-    checkbox.addEventListener("change", () => {
-      item.done = checkbox.checked;
-      saveItems(items);
-      renderList(items);
-    });
+    const title = document.createElement("span");
+    title.className = "item-title";
+    title.textContent = item.title?.he || item.title?.en || "";
 
-    const span = document.createElement("span");
-    span.className = "item-text";
-    span.textContent = item.text;
+    const value = document.createElement("span");
+    value.className = "item-value";
+    value.textContent = item.displayValue?.he || item.displayValue?.en || "";
 
-    const removeBtn = document.createElement("button");
-    removeBtn.type = "button";
-    removeBtn.className = "remove-btn";
-    removeBtn.setAttribute("aria-label", "Remove item");
-    removeBtn.textContent = "×";
-    removeBtn.addEventListener("click", () => {
-      items.splice(index, 1);
-      saveItems(items);
-      renderList(items);
-    });
+    const link = sefariaUrl(item);
+    if (link) {
+      const a = document.createElement("a");
+      a.href = link;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.append(title, value);
+      li.appendChild(a);
+    } else {
+      li.append(title, value);
+    }
 
-    li.append(checkbox, span, removeBtn);
     listEl.appendChild(li);
   });
 }
 
-function init() {
+async function init() {
   renderDate();
-  const items = loadItems();
-  renderList(items);
 
-  formEl.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const text = inputEl.value.trim();
-    if (!text) return;
+  try {
+    const res = await fetch("https://www.sefaria.org/api/calendars");
+    if (!res.ok) throw new Error(`Sefaria API returned ${res.status}`);
+    const data = await res.json();
 
-    const items = loadItems();
-    items.push({ text, done: false });
-    saveItems(items);
-    renderList(items);
-
-    inputEl.value = "";
-    inputEl.focus();
-  });
+    renderDate(data.date);
+    renderItems(data.calendar_items || []);
+    statusEl.style.display = "none";
+  } catch (err) {
+    statusEl.textContent =
+      "לא הצלחנו לטעון את לוח הלימוד היומי כרגע. נסו לרענן את הדף.";
+    console.error("Failed to load Sefaria calendar", err);
+  }
 }
 
 init();

@@ -1,9 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="he" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- 👉 Change this to your name once you get going. -->
     <title>My Website</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -12,29 +11,15 @@
       <p class="tag">Your website — a blank canvas</p>
       <h1>JJ's Dashboard</h1>
 
-      <section class="card" aria-labelledby="today-heading">
+      <section class="card" aria-labelledby="calendar-heading">
         <div class="today-header">
-          <p class="tag" id="today-heading">Today</p>
+          <p class="tag" id="calendar-heading">לוח לימוד יומי</p>
           <p class="today-date" id="today-date"></p>
         </div>
 
-        <h2 class="section-title">What I'm learning today</h2>
+        <ul id="calendar-list" class="calendar-list"></ul>
 
-        <form id="learning-form" class="learning-form">
-          <input
-            id="learning-input"
-            type="text"
-            placeholder="Add something you're learning today…"
-            autocomplete="off"
-          />
-          <button type="submit">Add</button>
-        </form>
-
-        <ul id="learning-list" class="learning-list"></ul>
-
-        <p id="learning-empty" class="hint">
-          Nothing added yet — type something above and hit Add.
-        </p>
+        <p id="calendar-status" class="hint">טוען את לוח הלימוד היומי מ־Sefaria…</p>
       </section>
     </main>
 

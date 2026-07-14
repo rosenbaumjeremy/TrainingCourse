@@ -173,3 +173,41 @@ h1 {
 .learning-list .remove-btn:hover {
   color: #dc2626;
 }
+
+.calendar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.calendar-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.calendar-list li:last-child {
+  border-bottom: none;
+}
+
+.calendar-list .item-title {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.calendar-list .item-value {
+  color: var(--muted);
+  text-align: left;
+}
+
+.calendar-list a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.calendar-list a:hover .item-value {
+  color: var(--accent);
+}
