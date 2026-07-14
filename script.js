@@ -23,10 +23,16 @@ function sefariaUrl(item) {
   return `https://www.sefaria.org.il/${encodeURIComponent(item.url)}`;
 }
 
+const ALLOWED_TITLES_EN = new Set(["Parashat Hashavua", "Daf Yomi", "929", "Daily Rambam"]);
+
+function isAllowed(item) {
+  return ALLOWED_TITLES_EN.has(item.title?.en);
+}
+
 function renderItems(items) {
   listEl.innerHTML = "";
 
-  items.forEach((item) => {
+  items.filter(isAllowed).forEach((item) => {
     const li = document.createElement("li");
 
     const title = document.createElement("span");
