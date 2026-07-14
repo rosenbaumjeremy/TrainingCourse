@@ -29,7 +29,7 @@ function isAllowed(item) {
   return ALLOWED_TITLES_EN.has(item.title?.en);
 }
 
-function renderItems(items) {
+function renderCalendarItems(items) {
   listEl.innerHTML = "";
 
   items.filter(isAllowed).forEach((item) => {
@@ -68,7 +68,7 @@ async function init() {
     const data = await res.json();
 
     renderDate(data.date);
-    renderItems(data.calendar_items || []);
+    renderCalendarItems(data.calendar_items || []);
     statusEl.style.display = "none";
   } catch (err) {
     statusEl.textContent =
