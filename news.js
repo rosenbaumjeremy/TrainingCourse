@@ -37,7 +37,7 @@ function extractItemsFromHtml(html) {
 }
 
 async function fetchViaOwnBackend() {
-  const res = await fetch("/api/news");
+  const res = await fetch("/api/news?fresh=1", { cache: "no-store" });
   if (!res.ok) throw new Error(`/api/news returned ${res.status}`);
   const data = await res.json();
   return data.items || [];
@@ -45,8 +45,14 @@ async function fetchViaOwnBackend() {
 
 async function fetchViaCorsProxy() {
   const target = "https://www.i24news.tv/en";
-  const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(target);
-  const res = await fetch(proxyUrl);
+  // Cache-bust both the proxy and the upstream page so every page load
+  // pulls whatever is actually live on i24news.tv right now.
+  const proxyUrl =
+    "https://api.allorigins.win/raw?url=" +
+    encodeURIComponent(target) +
+    "&_=" +
+    Date.now();
+  const res = await fetch(proxyUrl, { cache: "no-store" });
   if (!res.ok) throw new Error(`CORS proxy returned ${res.status}`);
   const html = await res.text();
   return extractItemsFromHtml(html);

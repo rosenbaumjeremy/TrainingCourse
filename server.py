@@ -5,7 +5,6 @@ homepage, since their site blocks direct browser fetches with CORS)."""
 
 import json
 import re
-import time
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -17,23 +16,21 @@ ITEM_RE = re.compile(
     r'"startedAt":new Date\("([^"]+)"\),"status":"(\w+)"\}'
 )
 
-_cache = {"items": None, "fetchedAt": 0}
-CACHE_TTL_SECONDS = 60
-
-
 def unescape_json_string(s):
     # Reuse json's own string decoder to handle \" \\ \u2014 etc.
     return json.loads(f'"{s}"')
 
 
 def fetch_i24_news():
-    now = time.time()
-    if _cache["items"] is not None and now - _cache["fetchedAt"] < CACHE_TTL_SECONDS:
-        return _cache["items"]
-
+    # Always fetch live from i24news.tv — no caching. Every time a visitor
+    # opens the dashboard, they should see exactly what's on the site right now.
     req = urllib.request.Request(
         I24_URL,
-        headers={"User-Agent": "Mozilla/5.0 (compatible; JJsDashboard/1.0)"},
+        headers={
+            "User-Agent": "Mozilla/5.0 (compatible; JJsDashboard/1.0)",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+        },
     )
     with urllib.request.urlopen(req, timeout=10) as resp:
         html = resp.read().decode("utf-8", errors="replace")
@@ -49,8 +46,6 @@ def fetch_i24_news():
             }
         )
 
-    _cache["items"] = items
-    _cache["fetchedAt"] = now
     return items
 
 
