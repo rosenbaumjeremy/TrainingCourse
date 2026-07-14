@@ -211,3 +211,88 @@ h1 {
 .calendar-list a:hover .item-value {
   color: var(--accent);
 }
+
+.scores-card {
+  text-align: left;
+}
+
+.scores-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.scores-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.scores-list li:last-child {
+  border-bottom: none;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.score-teams {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.score-team {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 220px;
+  font-size: 15px;
+}
+
+.score-team.winner .team-name {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.score-team .team-name {
+  color: var(--muted);
+}
+
+.score-team .team-score {
+  font-weight: 700;
+  color: var(--ink);
+  min-width: 28px;
+  text-align: right;
+}
+
+.score-status {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.score-status.state-pre {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
+.score-status.state-in {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.score-status.state-post {
+  background: #f3f4f6;
+  color: var(--muted);
+}
+
+.score-meta {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}

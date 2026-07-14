@@ -1,9 +1,11 @@
-# Personal Website Starter
+# JJ's Dashboard
 
-A deliberately blank starting point for building a personal website by prompting an AI. Plain HTML/CSS, no build step, no dependencies.
+A personal dashboard site (started from a blank HTML/CSS template), no build step, no dependencies.
 
 - `index.html` — the page content.
 - `style.css` — base styles.
+- `script.js` — fetches Sefaria's daily learning schedule (לוח לימוד יומי: Daf Yomi, Daily Mishnah, Daily Rambam, etc.) live from `https://www.sefaria.org/api/calendars` on every page load.
+- `scores.js` — fetches live World Cup and NBA Summer League (Las Vegas + Salt Lake City) scores from ESPN's public scoreboard API (`site.api.espn.com/apis/site/v2/sports/...`) on every page load. No stored history — always shows the current/most recent games.
 
 ## Running
 

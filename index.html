@@ -21,8 +21,25 @@
 
         <p id="calendar-status" class="hint">טוען את לוח הלימוד היומי מ־Sefaria…</p>
       </section>
+
+      <section class="card scores-card" dir="ltr" aria-labelledby="worldcup-heading">
+        <div class="today-header">
+          <p class="tag" id="worldcup-heading">World Cup Scores</p>
+        </div>
+        <ul id="worldcup-list" class="scores-list"></ul>
+        <p id="worldcup-status" class="hint">Loading World Cup scores from ESPN…</p>
+      </section>
+
+      <section class="card scores-card" dir="ltr" aria-labelledby="summerleague-heading">
+        <div class="today-header">
+          <p class="tag" id="summerleague-heading">NBA Summer League Scores</p>
+        </div>
+        <ul id="summerleague-list" class="scores-list"></ul>
+        <p id="summerleague-status" class="hint">Loading NBA Summer League scores from ESPN…</p>
+      </section>
     </main>
 
     <script src="script.js"></script>
+    <script src="scores.js"></script>
   </body>
 </html>
